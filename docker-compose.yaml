@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  test_src:
+    build: ./test_src
+    networks:
+    - test_net
+    cap_add:
+    - NET_ADMIN
+    environment:
+    - SIMULATED_BANDWIDTH=${SIMULATED_BANDWIDTH}
+    - SIMULATED_LATENCY=${SIMULATED_LATENCY}
+    - SIMULATED_LOSS=${SIMULATED_LOSS}
+    - SIMULATED_DURATION=${SIMULATED_DURATION}
+    depends_on:
+    - test_dest
+    ports:
+    - 5001
+
+  test_dest:
+    build: ./test_dest
+    networks:
+    - test_net
+    cap_add:
+    - NET_ADMIN
+    ports:
+    - 5001
+    environment:
+    - SIMULATED_BANDWIDTH=${SIMULATED_BANDWIDTH}
+    - SIMULATED_LATENCY=${SIMULATED_LATENCY}
+    - SIMULATED_LOSS=${SIMULATED_LOSS}
+
+networks:
+    test_net:
