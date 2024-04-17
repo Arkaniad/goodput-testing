@@ -2,6 +2,9 @@ version: "3.8"
 services:
   test_src:
     build: ./test_src
+    # entrypoint: 
+    # - sleep
+    # - "10000"
     networks:
     - test_net
     cap_add:
@@ -15,7 +18,11 @@ services:
     - test_dest
     ports:
     - 5001
-
+    sysctls:
+      # these options can help with higher latencies
+      # default settings result in connections not able to be established
+      net.ipv4.tcp_syn_retries: 24
+      net.ipv4.tcp_window_scaling: 1
   test_dest:
     build: ./test_dest
     networks:
@@ -28,6 +35,11 @@ services:
     - SIMULATED_BANDWIDTH=${SIMULATED_BANDWIDTH}
     - SIMULATED_LATENCY=${SIMULATED_LATENCY}
     - SIMULATED_LOSS=${SIMULATED_LOSS}
+    sysctls:
+      # these options can help with higher latencies
+      # default settings result in connections not able to be established
+      net.ipv4.tcp_syn_retries: 24
+      net.ipv4.tcp_window_scaling: 1
 
 networks:
     test_net:
