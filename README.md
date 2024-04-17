@@ -1,5 +1,7 @@
 # Overview
 
+This is a small Docker Compose lab to test TCP connection characteristics under adverse link conditions.
+
 ## Test a bandwidth scenario
 
 ``` bash
@@ -55,3 +57,11 @@ If you want to adjust the duration of the test, you can add an additional argume
 Same as above, but for 60 seconds rather than 30
 
 # Troubleshooting
+
+## `read tcp flags (runt) failed`
+
+I think you can just ignore this *shrugs*
+
+## `tcp connect failed: Host is unreachable`
+
+Sometimes it seems like there's a race between containers or Docker networking funk - Should be able to just retry it
